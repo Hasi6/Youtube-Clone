@@ -62,6 +62,8 @@ body {
 
 #mainContentContainer {
     padding: 10px 30px;
+    display: flex;
+    flex: 1;
 }
 
 .searchBarContainer {
@@ -103,4 +105,12 @@ body {
     box-sizing: border-box;
     padding-top: 3px;
     padding-bottom: 3px;
+}
+
+.column {
+    flex: 1;
+    background-color: #fff;
+    min-height: 300px;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 1px 2px;
 }
