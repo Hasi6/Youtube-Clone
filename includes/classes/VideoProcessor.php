@@ -3,6 +3,7 @@ class VideoProcessor {
 
     private $con;
     private $sizeLimit = 1000000000;
+    private $supportedVideoTypes = array("mp4","flv","mkv","vob","wvm","avi","mpg","3gp");
 
     public function __construct($con) {
         $this->con = $con;
@@ -33,21 +34,39 @@ class VideoProcessor {
 
         // check videoSize
         if(!$this->isValidSize($videoData)){
-        // File is too large message
-            $message = "<div class='container' align='center'>
-                            <div class='alert alert-danger'>
-                                <h4>File is too large can't be more than 1GB</h4>
-                            </div>
-                        </div>";
 
-            echo $message;
+        // File is too large message
+            $this->messages("File is too large can't be more than 1GB");
+            return false;
+        }
+        //Check uploaded file type is a Video 
+        else if(!$this->isValidType($videoType)){
+
+            // if File is not a Video display Message
+            $this->messages("Your Upload file is not a Video, Please Select a Video and Try Again");
             return false;
         }
     }
 
         // check videoSize function
-    private function isValidSize($video){
-        return $video["size"] <= $this->sizeLimit;
+    private function isValidSize($videoSize){
+        return $videoSize["size"] <= $this->sizeLimit;
     }
+
+    //Check uploaded file type is a Video function
+    private function isValidType($videoType){
+        $lowerCase = strtolower($videoType);
+        // check video type is supported Type
+        return in_array($lowerCase, $this->supportedVideoTypes);
+    }
+
+    //Display Messages
+    private function messages($message){
+    echo "<div class='container' align='center'>
+                <div class='alert alert-danger'>
+                    <h4>$message</h4>
+                </div>
+        </div>";
+        }
 }
 ?>
