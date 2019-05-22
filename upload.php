@@ -1,25 +1,19 @@
-<?php
-    require_once('./includes/header.php');
-    require_once('./includes/classes/videoDetails.php');
+<?php 
+require_once("includes/header.php");
+require_once("includes/classes/VideoDetails.php");
 ?>
+
 
 <div class="column">
-    
-<?php 
-    $formProvider = new VideoDetailsFromProvider($con);
+
+    <?php
+    $formProvider = new VideoDetailsFormProvider($con);
     echo $formProvider->createUploadForm();
+    ?>
 
-    
-
-?>
 
 </div>
 
 
-
-
-
-
-<?php
-    require_once('./includes/footer.php');
-?>
+<?php require_once("includes/footer.php"); ?>
+                

@@ -1,25 +1,16 @@
 <?php
+class VideoUploadData {
 
-    class VideoUploadData {
+    public $videoDataArray, $title, $description, $privacy, $category, $uploadedBy;
 
-        public $videoDataArray;
-        public $title;
-        public $description;
-        public $privacy;
-        public $category;
-        public $uploadedBy;
-
-        public function __construct($videoDataArray, $title, $description, $privacy, $category, $uploadedBy) {
-            
-            $this->$videoDataArray = $videoDataArray;
-            $this->$title = $title;
-            $this->$description = $description;
-            $this->$privacy = $privacy;
-            $this->$category = $category;
-            $this->$uploadedBy = $uploadedBy;
-
-        }
+    public function __construct($videoDataArray, $title, $description, $privacy, $category, $uploadedBy) {
+        $this->videoDataArray = $videoDataArray;
+        $this->title = $title;
+        $this->description = $description;
+        $this->privacy = $privacy;
+        $this->category = $category;
+        $this->uploadedBy = $uploadedBy;
     }
 
-
+}
 ?>
