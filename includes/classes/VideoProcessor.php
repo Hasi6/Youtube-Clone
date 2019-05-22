@@ -19,10 +19,16 @@ class VideoProcessor {
 
         $tempFilePath = str_replace(" ", "_", $tempFilePath); //in temppath if there is spaces it will replace form _ and again save the tempfilepath
 
-        // Check video data like video type, size, and other
+        // Check video data like video type, size, and others has erros or not
         $isValidData = $this->processData($videoData, $tempFilePath);
 
-        echo $tempFilePath;
+        if(!$isValidData){
+            return false;
+        }
+
+        if(move_uploaded_file($videoData["tmp_name"], $tempFilePath)){
+            $this->messages("File Moved Successfully","success");
+        }
     }
 
     // Check video data like video type, size, and other Function
@@ -36,16 +42,22 @@ class VideoProcessor {
         if(!$this->isValidSize($videoData)){
 
         // File is too large message
-            $this->messages("File is too large can't be more than 1GB");
+            $this->messages("File is too large can't be more than 1GB","danger");
             return false;
         }
         //Check uploaded file type is a Video 
         else if(!$this->isValidType($videoType)){
 
             // if File is not a Video display Message
-            $this->messages("Your Upload file is not a Video, Please Select a Video and Try Again");
+            $this->messages("Your Upload file is not a Video, Please Select a Video and Try Again","danger");
             return false;
         }
+
+        else if ($this->hasError($videoData)){
+            $this->messages("Error Code". $videoData["error"],"danger");
+            return false;
+        }
+        return true;
     }
 
         // check videoSize function
@@ -60,10 +72,14 @@ class VideoProcessor {
         return in_array($lowerCase, $this->supportedVideoTypes);
     }
 
+    private function hasError($videoData){
+        return $videoData["error"] != 0;
+    }
+
     //Display Messages
-    private function messages($message){
+    private function messages($message,$type){
     echo "<div class='container' align='center'>
-                <div class='alert alert-danger'>
+                <div class='alert alert-$type'>
                     <h4>$message</h4>
                 </div>
         </div>";
