@@ -51,14 +51,15 @@ class VideoProcessor {
                 return false;
             }
 
-            $this->messages("Video Uploaded Successfully","success");
-        }
             //Check if thumblines added
             if(!$this->generateThumbnails($finalFilePath)){
                 $this->messages("Upload Failed could not generate thumbnails","danger");
                 return false;
             }
 
+            $this->messages("Video Uploaded Successfully","success");
+            return true;
+        }
     }
 
     // Check video data like video type, size, and other Function
@@ -155,7 +156,7 @@ class VideoProcessor {
     public function generateThumbnails($filePath){
 
         $thumbnailSize = "210x118";
-        $numThumbnails = 10;
+        $numThumbnails = 3;
         $pathToThumbnails = "uploads/videos/thumbnails";
 
         // Get Video Duration
@@ -166,19 +167,60 @@ class VideoProcessor {
 
         // Covert Video duration to proper
         $this->updateDuration($duration, $videoId);
+
+        //Create Thumnail images
+        for($num = 1; $num <= $numThumbnails; $num++){
+            $imagesName = uniqid() . ".jpg";
+            $interval = ($duration * 0.8) / $numThumbnails * $num;
+            $fullThumbnailPath = "$pathToThumbnails/$videoId-$imagesName";
+
+            $cmd = "$this->ffmpegPath -i $filePath -ss $interval -s $thumbnailSize -vframes 1 $fullThumbnailPath 2>&1";
+
+            $outputLog = array();
+            exec($cmd, $outputLog, $returnCode);
+
+            if($returnCode != 0){
+                //command Failed
+                foreach($outputLog as $line){
+                    $this->messages($line, 'danger');
+                    echo "<br/>";
+                }
+                return false;
+            }
+
+            //Insert thumnails to the database
+            $query = $this->con->prepare("INSERT INTO thumbnails(videoid, filePath, selected) VALUES (:videoId, :filePath, :selected)");
+
+            $query->bindParam(":videoId", $videoId);
+            $query->bindParam(":filePath", $fullThumbnailPath);
+            $query->bindParam(":selected", $selected);
+
+           if($num == 1){
+               $selected = 1;
+           }
+           else{
+               $selected = 0;
+           }
+           
+           $success = $query->execute();
+
+           if(!$success){
+               $this->messages("Error Inserting Thumnails","danger");
+               return false;
+           }
+        }
+        return true;
     }
 
 
     // Get Viedo Duration function
    private function getVideoDuration($filePath){
-        return shell_exec("$this->ffprobePath -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $filePath");
+       //We have to convert to int because this will return a string but we need a int
+        return (int)shell_exec("$this->ffprobePath -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $filePath");
    }
 
     // Covert Video duration to proper Function
    private function updateDuration($duration, $videoId){
-
-        $duration = (int)$duration; //In the pass function duration pass as a string so we have to convert it as a string we want it as a intiger
-
         $hours = floor($duration / 3600);
         $mins = floor(($duration - ($hours * 3600)) / 60);
         $secounds = floor($duration % 60);
