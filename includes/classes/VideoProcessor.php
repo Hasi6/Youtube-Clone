@@ -26,8 +26,16 @@ class VideoProcessor {
             return false;
         }
 
-        if(move_uploaded_file($videoData["tmp_name"], $tempFilePath)){
-            $this->messages("File Moved Successfully","success");
+        if(move_uploaded_file($videoData["tmp_name"], $tempFilePath)) {
+
+            $finalFilePath = $targetDir . uniqid() . ".mp4" ;
+
+            // Check video details is valid
+            if(!$this->insetVideodata($videoUploadData, $finalFilePath)){
+                $this->messages("Insert Query Failed","danger");
+                return false;
+            }
+            $this->messages("Video Uploaded Successfully","success");
         }
     }
 
@@ -72,9 +80,25 @@ class VideoProcessor {
         return in_array($lowerCase, $this->supportedVideoTypes);
     }
 
+    // Check if has another error
     private function hasError($videoData){
         return $videoData["error"] != 0;
     }
+
+    // Check video details is valid
+    private function insetVideoData($uploadData,$filePath){
+        $query = $this->con->prepare("INSERT INTO videos(title, uploadedBy, description, privacy, category, filePath) 
+        VALUES(:title, :uploadedBy, :description, :privacy, :category, :filePath)"); //When we using :title and :uploadedBy Like that after we can add values them
+        
+        $query->bindParam(":title", $uploadData->title);
+        $query->bindParam(":uploadedBy", $uploadData->uploadedBy);
+        $query->bindParam(":description", $uploadData->description);
+        $query->bindParam(":privacy", $uploadData->privacy);
+        $query->bindParam(":category", $uploadData->category);
+        $query->bindParam(":filePath", $filePath);
+
+        return $query->execute();
+}
 
     //Display Messages
     private function messages($message,$type){
