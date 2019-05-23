@@ -3,10 +3,12 @@ class VideoProcessor {
 
     private $con;
     private $sizeLimit = 1000000000;
-    private $supportedVideoTypes = array("mp4","flv","mkv","vob","wvm","avi","mpg","3gp");
+    private $supportedVideoTypes = array("mp4","flv","mkv","vob","wvm","avi","mpg","3gp","swf","webm");
+    private $ffmpegPath;
 
     public function __construct($con) {
         $this->con = $con;
+        $this->ffmpegPath = realpath("ffmpeg/bin/ffmpeg.exe");
     }
 
     public function upload($videoUploadData) {
@@ -33,6 +35,10 @@ class VideoProcessor {
             // Check video details is valid
             if(!$this->insetVideodata($videoUploadData, $finalFilePath)){
                 $this->messages("Insert Query Failed","danger");
+                return false;
+            }
+            if(!$this->convertvideoToMp4($tempFilePath, $finalFilePath)){
+                $this->messages("Upload Failed","danger");
                 return false;
             }
             $this->messages("Video Uploaded Successfully","success");
@@ -99,6 +105,26 @@ class VideoProcessor {
 
         return $query->execute();
 }
+
+    // Convert Video file to mp4
+    public function convertvideoToMp4($tempFilePath, $finalFilePath){
+        $cmd = "$this->ffmpegPath  -i  $tempFilePath   $finalFilePath  2>&1";
+
+        $outputLog = array();
+        exec($cmd, $outputLog, $returnCode);
+
+        if($returnCode != 0){
+            //command Failed
+            foreach($outputLog as $line){
+                $this->messages($line, 'danger');
+                echo "<br/>";
+            }
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
 
     //Display Messages
     private function messages($message,$type){
