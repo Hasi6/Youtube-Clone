@@ -166,8 +166,6 @@ class VideoProcessor {
 
         // Covert Video duration to proper
         $this->updateDuration($duration, $videoId);
-
-        echo "Duration is: ".$duration;
     }
 
 
@@ -178,9 +176,40 @@ class VideoProcessor {
 
     // Covert Video duration to proper Function
    private function updateDuration($duration, $videoId){
+
+        $duration = (int)$duration; //In the pass function duration pass as a string so we have to convert it as a string we want it as a intiger
+
         $hours = floor($duration / 3600);
         $mins = floor(($duration - ($hours * 3600)) / 60);
-        $secound = floor($duration % 60);
+        $secounds = floor($duration % 60);
+
+        if($hours < 1){
+            $hours = "";
+        }
+        else{
+            $hours = $hours . ":";
+        }
+        if($mins < 10){
+            $mins = "0" . $mins . ":";
+        }
+        else{
+            $mins = $mins . ":";
+        }
+        if($secounds < 10){
+            $secounds = "0" . $secounds;
+        }
+        else{
+            $secounds = $secounds;
+        }
+
+        $duration = $hours.$mins.$secounds;
+
+        $query = $this->con->prepare("UPDATE videos SET duration=:duration WHERE id=:videoId");
+
+        $query->bindParam(":duration", $duration);
+        $query->bindParam(":videoId", $videoId);
+        $query->execute();
+
    }
 
     //Display Messages
