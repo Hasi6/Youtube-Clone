@@ -41,6 +41,12 @@ class VideoProcessor {
                 $this->messages("Upload Failed","danger");
                 return false;
             }
+
+            if(!$this->deleteFile($tempFilePath)){
+                $this->messages("Upload Failed","danger");
+                return false;
+            }
+            
             $this->messages("Video Uploaded Successfully","success");
         }
     }
@@ -124,6 +130,15 @@ class VideoProcessor {
         else{
             return true;
         }
+    }
+
+    // Delete the Original uploaded video file and keep the coverted one
+    private function deleteFile($filePath){
+        if(!unlink($filePath)){
+            $this->messages("Could not delete $filePath", "danger");
+            return false;
+        }
+        return true;
     }
 
     //Display Messages
