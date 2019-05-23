@@ -5,10 +5,12 @@ class VideoProcessor {
     private $sizeLimit = 1000000000;
     private $supportedVideoTypes = array("mp4","flv","mkv","vob","wvm","avi","mpg","3gp","swf","webm");
     private $ffmpegPath;
+    private $ffprobePath;
 
     public function __construct($con) {
         $this->con = $con;
         $this->ffmpegPath = realpath("ffmpeg/bin/ffmpeg.exe");
+        $this->ffprobePath = realpath("ffmpeg/bin/ffprobe.exe");
     }
 
     public function upload($videoUploadData) {
@@ -37,18 +39,26 @@ class VideoProcessor {
                 $this->messages("Insert Query Failed","danger");
                 return false;
             }
+            // Check if Video convert currectly
             if(!$this->convertvideoToMp4($tempFilePath, $finalFilePath)){
                 $this->messages("Upload Failed","danger");
                 return false;
             }
 
+            // check if original file is deleted
             if(!$this->deleteFile($tempFilePath)){
                 $this->messages("Upload Failed","danger");
                 return false;
             }
-            
+
             $this->messages("Video Uploaded Successfully","success");
         }
+            //Check if thumblines added
+            if(!$this->generateThumbnails($finalFilePath)){
+                $this->messages("Upload Failed could not generate thumbnails","danger");
+                return false;
+            }
+
     }
 
     // Check video data like video type, size, and other Function
@@ -140,6 +150,38 @@ class VideoProcessor {
         }
         return true;
     }
+
+    // Generate Thumnales
+    public function generateThumbnails($filePath){
+
+        $thumbnailSize = "210x118";
+        $numThumbnails = 10;
+        $pathToThumbnails = "uploads/videos/thumbnails";
+
+        // Get Video Duration
+        $duration = $this->getVideoDuration($filePath);
+
+        // get video id 
+        $videoId = $this->con->lastInsertId(); //lastInsertid is a build in php function it gives the last insert itsms id
+
+        // Covert Video duration to proper
+        $this->updateDuration($duration, $videoId);
+
+        echo "Duration is: ".$duration;
+    }
+
+
+    // Get Viedo Duration function
+   private function getVideoDuration($filePath){
+        return shell_exec("$this->ffprobePath -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 $filePath");
+   }
+
+    // Covert Video duration to proper Function
+   private function updateDuration($duration, $videoId){
+        $hours = floor($duration / 3600);
+        $mins = floor(($duration - ($hours * 3600)) / 60);
+        $secound = floor($duration % 60);
+   }
 
     //Display Messages
     private function messages($message,$type){
