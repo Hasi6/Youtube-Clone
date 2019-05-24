@@ -59,6 +59,12 @@ if(isset($_POST["submitButton"])){
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <!-- js -->
     <script src="./assets/js/commonActions.js"></script>
 </head>
@@ -79,18 +85,27 @@ if(isset($_POST["submitButton"])){
             <div class="logInForm">
                 <form action="login.php" method="POST">
 
-                <input type="text" name="username" placeholder="Enter username" value="<?php getInputValues('username') ?>" required>
-                <input type="password" name="password" placeholder="Enter passowrd" autocomplete="off" required>
+                <div class="input-field col s6">
+                <label for="username">Username</label>
+                <input type="text" name="username" value="<?php getInputValues('username') ?>" id="username" required>
+                </div>
+
+                <div class="input-field col s6">
+                <label for="passowrd">Passowrd</label>
+                <input type="password" name="password" id="password" autocomplete="off" required>
 
                 <?php echo $accounts->getError(Constance::$login);?>
+                </div>
 
-
-                <input type="submit" name="submitButton" value="SUBMIT" class="btn btn-primary">
-
+                <div class="input-field col s6">
+                <input type="submit" name="submitButton" value="SUBMIT" class="btn btn-primary btn-block">
+                </div>
                 </form>
             </div>
-
+            
+            <div class="input-field col s6">
             <a href="signin.php" class="signInMessage">Don't Have an Account? SignIn Here!</a>
+            </div>
         </div>
 
     </div>

@@ -1,6 +1,22 @@
 <?php
     require('includes/config.php');
+    require('includes/classes/User.php');
 ?>
+
+<?php
+
+    // if user logged we pass username and if not we pass empty as username
+    if(isset($_SESSION["userLoggedIn"])){
+        $userNameLoggedIn = $_SESSION["userLoggedIn"];
+    }
+    else{
+        $userNameLoggedIn = "";
+    }
+
+    $userLoggedInObj = new User($con, $userNameLoggedIn);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

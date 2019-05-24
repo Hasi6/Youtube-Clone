@@ -68,6 +68,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+     <!-- Compiled and minified CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
     <!-- js -->
     <script src="./assets/js/commonActions.js"></script>
 </head>
@@ -87,7 +94,7 @@
             <!-- SignIn Inputs -->
             <div class="signInForm">
                 <form action="signin.php" method="POST">
-
+            
                     <input type="text" name="firstName" placeholder="Enter First Name" autocomplete="off" value="<?php getInputValues('firstName') ?>" required>
                     <!-- if there is an error in firstName show the error to the user -->
                     <?php echo $accounts->getError(Constance::$firstNameCharacters);?>
@@ -117,11 +124,12 @@
                     <?php echo $accounts->getError(Constance::$passwordLenght);?>
 
                     
-                    <input type="submit" name="submitButton" value="SUBMIT" class="btn btn-primary">
+                    <input type="submit" name="submitButton" value="SUBMIT" class="btn btn-info btn-block">
                 </form>
             </div>
-
+            <div class="input-field col s6">
             <a href="login.php" class="logInMessage">Already Have an Account? Login Here!</a>
+            </div>
         </div>
 
     </div>

@@ -17,7 +17,8 @@ body {
 
 .signInContainer,
 .logInContainer {
-    height: 100vh;
+    margin-top: 50px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,6 +40,9 @@ body {
 
 .column a {
     font-size: 14px;
+    text-align: center;
+    width: 60%;
+    margin: 0 16%
 }
 
 .signInForm form,
@@ -56,11 +60,10 @@ body {
     border-bottom: 1px solid #dedede;
 }
 
-.btn-primary {
+.btn {
     border-radius: 0;
     width: 100px;
     float: right;
-    margin-bottom: 30px;
 }
 
 .logInMessage,
