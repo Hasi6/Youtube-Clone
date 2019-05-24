@@ -4,9 +4,11 @@
 
 <div class="alert alert-info" style="width:100%" align="center">
 <?php
-    $name = $_SESSION["userLoggedIn"] ;
     if(isset($_SESSION["userLoggedIn"])){
-        echo "<h3>You Logged as $name</h3>";
+        echo "<h3>Welcome " . $userLoggedInObj->getUsername() . "</h3>";
+    }
+    else{
+        echo "<h3>Welcome Guest Get Full Experiance Please Login to HasiTube</h3>";
     }
 ?>
 </div>

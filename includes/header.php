@@ -1,6 +1,7 @@
 <?php
     require('includes/config.php');
     require('includes/classes/User.php');
+    require_once('includes/classes/Video.php');
 ?>
 
 <?php
