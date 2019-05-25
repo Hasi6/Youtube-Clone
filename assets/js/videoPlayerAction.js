@@ -1,3 +1,6 @@
 function likeVideo(button, videoid) {
-    alert('butto');
+    $.post("Ajax/likeVideo.php")
+        .done(function(data) {
+            alert(data);
+        });
 }
