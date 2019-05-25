@@ -35,7 +35,16 @@
         }
 
         private function createDisLikeButton(){
-            return ButtonProvider::createButton("Unlike","","","");
+            $text = $this->video->getDisLikes();
+            $videoId = $this->video->getId();
+            $action = "likeVideo(this, $videoId)";
+            $class = "DisLike";
+
+            $imageSrc = "assets/images/icons/thumb-down.png";
+
+            // Change Button images if already disliked
+            
+            return ButtonProvider::createButton($text,$imageSrc,$action,$class);
         }
     }
 ?>
