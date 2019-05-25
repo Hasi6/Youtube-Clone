@@ -19,9 +19,19 @@
                         $dislikeButton
                     </div>";
         }
-
+        
+        
         private function createLikeButton(){
-            return ButtonProvider::createButton("Like","","","");
+            $text = $this->video->getLikes();
+            $videoId = $this->video->getId();
+            $action = "likeVideo(this, $videoId)";
+            $class = "LikeButton";
+
+            $imageSrc = "assets/images/icons/thumb-up.png";
+
+            // Change Button images if already liked
+
+            return ButtonProvider::createButton($text,$imageSrc,$action,$class);
         }
 
         private function createDisLikeButton(){

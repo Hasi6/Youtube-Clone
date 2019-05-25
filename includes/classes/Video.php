@@ -89,6 +89,12 @@
             $this->sqlDate["views"] = $this->sqlDate["views"] + 1;
         }
 
+        // Get Likes to show in the video
+
+        public function getLikes(){
+            return 5;
+        }
+
     }
 
 ?>
