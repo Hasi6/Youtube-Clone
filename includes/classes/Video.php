@@ -117,6 +117,12 @@
             return $data["count"];
         }
 
+        // Like Function
+        public function like(){
+            
+        }
+
+
     }
 
 ?>
