@@ -132,8 +132,23 @@
             if($query->rowCount() > 0){
                 //user is already liked
                 echo "Already Liked";
+                $query = $this->con->prepare("DELETE FROM likes WHERE username = :username AND videoId = :videoId");
+
+                $query->bindParam(":username", $username);
+                $query->bindParam(":videoId", $id);
+
+                $query->execute();
+
             }
             else{
+                //When user press like if user already dislike the video dislike will delete
+                $query = $this->con->prepare("DELETE FROM dislikes WHERE username = :username AND videoId = :videoId");
+
+                $query->bindParam(":username", $username);
+                $query->bindParam(":videoId", $id);
+
+                $query->execute();
+
                 //user has not liked yet
                 echo "You Juest liked the video";
                 $query = $this->con->prepare("INSERT INTO likes (username, videoId) VALUES (:username, :videoId)");
