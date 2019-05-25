@@ -9,6 +9,13 @@ function likeVideo(button, videoId) {
             dislikeButton.removeClass("active");
 
             var results = JSON.parse(data);
-            console.log(results);
+            updateLikesValue(likeButton.find(".text"), results.likes);
+
+            updateLikesValue(dislikeButton.find(".text"), results.dislikes);
         });
+}
+
+function updateLikesValue(element, num) {
+    var likesCountVal = element.text() || 0;
+    element.text(parseInt(likesCountVal) + parseInt(num));
 }
