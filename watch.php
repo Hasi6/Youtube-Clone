@@ -1,6 +1,7 @@
 <?php
     require_once('./includes/header.php');
     require_once('./includes/classes/VideoPlayer.php');
+    require_once('./includes/classes/VideoInfoSection.php');
 ?>
 
 <!-- Link watch css -->
@@ -30,7 +31,11 @@
     <?php
         $videoPlayer = new VideoPlayer($video);
         echo $videoPlayer->create(true);
+
+        $videoInfoSection = new VideoInfoSection($con, $video, $userLoggedInObj);
+        echo $videoInfoSection->create();
     ?>
+
 </div>
 
 <div class="suggestions">
