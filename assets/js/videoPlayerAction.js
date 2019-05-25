@@ -24,6 +24,32 @@ function likeVideo(button, videoId) {
         });
 }
 
+function dislikeVideo(button, videoId) {
+    $.post("Ajax/dislikeVideo.php", { videoId: videoId })
+        .done(function(data) {
+
+            var dislikeButton = $(button);
+            var likeButton = $(button).siblings(".likeButton");
+
+            dislikeButton.addClass("active");
+            likeButton.removeClass("active");
+
+            var results = JSON.parse(data);
+            updateLikesValue(likeButton.find(".text"), results.likes);
+
+            updateLikesValue(dislikeButton.find(".text"), results.dislikes);
+
+            if (results.dislikes < 0) {
+                dislikeButton.removeClass("active");
+                dislikeButton.find("img:first").attr("src", "assets/images/icons/thumb-down.png");
+            } else {
+                dislikeButton.find("img:first").attr("src", "assets/images/icons/thumb-down-active.png");
+            }
+
+            likeButton.find("img:first").attr("src", "assets/images/icons/thumb-up.png");
+        });
+}
+
 function updateLikesValue(element, num) {
     var likesCountVal = element.text() || 0;
     element.text(parseInt(likesCountVal) + parseInt(num));

@@ -15,6 +15,10 @@
             $this->sqlDate = $query->fetch(PDO::FETCH_ASSOC);
         }
 
+        public static function isLoggedIn() {
+            return isset($_SESSION["userLoggedIn"]);
+        }
+
         //Get Name to Display
         public function getUsername(){
             return $this->sqlDate["username"];

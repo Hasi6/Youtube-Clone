@@ -177,6 +177,65 @@
            return $query->rowCount() > 0 ;
         }
 
+        public function dislike(){
+            $id = $this->getId();
+            $username = $this->userLoggedInObj->getUsername();
+
+            if($this->wasDisLikedBy()){
+                //user is already liked
+                $query = $this->con->prepare("DELETE FROM dislikes WHERE username = :username AND videoId = :videoId");
+
+                $query->bindParam(":username", $username);
+                $query->bindParam(":videoId", $id);
+
+                $query->execute();
+
+                $results = array(
+                    "likes" => 0,
+                    "dislikes" => -1
+                );
+                return json_encode($results);
+
+            }
+            else{
+                //When user press like if user already dislike the video dislike will delete
+                $query = $this->con->prepare("DELETE FROM likes WHERE username = :username AND videoId = :videoId");
+
+                $query->bindParam(":username", $username);
+                $query->bindParam(":videoId", $id);
+
+                $query->execute();
+                $count = $query->rowCount();
+
+                //user has not liked yet
+                $query = $this->con->prepare("INSERT INTO dislikes (username, videoId) VALUES (:username, :videoId)");
+
+                $query->bindParam(":username", $username);
+                $query->bindParam(":videoId", $id);
+
+                $query->execute();
+
+                $results = array(
+                    "likes" => 0 - $count,
+                    "dislikes" => 1
+                );
+                return json_encode($results);
+            }
+        }
+
+        public function wasDisLikedBy(){
+            $id = $this->getId();
+
+            $query = $this->con->prepare("SELECT * FROM dislikes WHERE username = :username AND videoId = :videoId");
+            $query->bindParam(":username",$username);
+            $query->bindParam(":videoId",$id);
+
+            $username = $this->userLoggedInObj->getUsername();
+            $query->execute();
+
+           return $query->rowCount() > 0 ;
+        }
+
 
     }
 

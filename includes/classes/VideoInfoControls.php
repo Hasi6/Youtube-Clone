@@ -46,7 +46,9 @@
             $imageSrc = "assets/images/icons/thumb-down.png";
 
             // Change Button images if already disliked
-            
+            if($this->video->wasDisLikedBy()){
+                $imageSrc = "assets/images/icons/thumb-down-active.png";
+            }
             return ButtonProvider::createButton($text,$imageSrc,$action,$class);
         }
     }

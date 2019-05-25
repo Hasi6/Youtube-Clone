@@ -7,7 +7,7 @@
 <?php
 
     // if user logged we pass username and if not we pass empty as username
-    if(isset($_SESSION["userLoggedIn"])){
+    if(User::isLoggedIn()){
         $userNameLoggedIn = $_SESSION["userLoggedIn"];
     }
     else{
