@@ -62,6 +62,38 @@
                         $button
                     </div>";
         }
+
+        public static function createSubscribeButton($con, $userToObj, $userLoggedInObj){
+
+            $userTo = $userToObj->getUsername();
+            $userLoggedIn = $userLoggedInObj->getUsername();
+
+            $isSubscribedTo = $userLoggedInObj->isSubscribedTo($userTo);
+            
+            if($isSubscribedTo){
+                $buttonText = "SUBSCRIBED";
+            }
+            else{
+                $buttonText = "SUBSCRIBE";
+            }
+
+            $buttonText .= " " .$userToObj->getSubscriberCount();
+
+            if($isSubscribedTo){
+                $buttonClass = "unsubscribe button";
+            }
+            else{
+                $buttonClass = "subscribe button";
+            }
+
+            $action = "subscribe(\"$userTo\", \"$userLoggedIn\", this)";
+
+            $button = ButtonProvider::createButton($buttonText, null, $action, $buttonClass);
+
+            return "<diV class='subscribeButtonContainer'>
+                        $button
+                    </diV>";
+        }
     }
 
 ?>
