@@ -44,8 +44,34 @@
             return $this->sqlDate["profilePic"];
         }
 
+        // Get Signin Date to Display
         public function getSignUpDate(){
             return $this->sqlDate["signUpDate"];
+        }
+
+        // Subscribers Function
+        public function isSubscribedTo($userTo){
+            $query = $this->con->prepare("SELECT * FROM subscribers WHERE userTo= :userTo AND userFrom= :userFrom");
+            $query->bindParam(":userTo", $userTo);
+            $query->bindParam(":userFrom",$username);
+
+            $username = $this->getUsername();
+
+            $query->execute();
+
+            return $query->rowCount() > 0;
+        }
+
+        // get User Subscribers Count
+        public function getSubscriberCount(){
+            $query = $this->con->prepare("SELECT * FROM subscribers WHERE userTo= :userTo");
+            $query->bindParam(":userTo", $username);
+
+            $username = $this->getUsername();
+
+            $query->execute();
+
+            return $query->rowCount();
         }
 
     }
