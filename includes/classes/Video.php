@@ -64,7 +64,9 @@
 
         //Get Video Upload date
         public function getUploadDate(){
-            return $this->sqlDate["uploadDate"];
+            $date = $this->sqlDate["uploadDate"];
+            return date("M d, Y G:i:s", strtotime($date));
+
         }
 
         //Get Video Views
