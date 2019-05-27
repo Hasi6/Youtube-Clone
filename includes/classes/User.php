@@ -41,7 +41,7 @@
 
         //Get Profile Picture to Display
         public function getProfilePic(){
-            return $this->sqlDate["ProfilePic"];
+            return $this->sqlDate["profilePic"];
         }
 
         public function getSignUpDate(){

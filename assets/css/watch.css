@@ -32,6 +32,7 @@
     font-size: 18px;
     font-weight: 400;
     line-height: 24px;
+    margin-top: -20px;
 }
 
 .bottomSection {
@@ -46,7 +47,8 @@
 
 .controls {
     flex: 1;
-    text-align: right
+    text-align: right;
+    margin-top: -30px;
 }
 
 .controls button {

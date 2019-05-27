@@ -48,7 +48,7 @@
         $ps = hash("sha512", $ps);
 
         // Insert the details to database
-        $profilePic = "../../assets/images/icons/profile.png";
+        $profilePic = "assets/images/icons/profile.png";
 
         $query = $this->con->prepare("INSERT INTO users (firstName,lastName,username,email,password,profilePic) VALUES (:fn,:ln,:un,:em,:ps,:pp)");
         $query->bindParam(":fn", $fn);
