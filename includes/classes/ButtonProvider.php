@@ -26,6 +26,23 @@
                     </button>";
         }
 
+        public static function createHyperLinkButton($text, $imagesSrc, $href, $class){
+
+            if($imagesSrc == null){
+                $image = "";
+            }
+            else{
+                $image = "<img src='$imagesSrc'>";
+            }
+
+            return "<a href='$href'>
+                        <button class='$class'>
+                            $image
+                            <span class='text'>$text</span>
+                        </button>
+                    </a>";
+        }
+
         public static function createProfileButton($con, $username){
             $userObj = new User($con, $username);
             $profilePic = $userObj->getProfilePic();
@@ -34,6 +51,16 @@
             return "<a href='$link'>
                         <img src='$profilePic' class='profilePicture'>
                     </a>";
+        }
+
+        public static function createEditVideoButton($videoId){
+            $href = "editVideo.php?videoId=$videoId";
+
+            $button = ButtonProvider::createHyperLinkButton("Edit Video", null, $href, "edit button");
+
+            return "<div class='editVideoButtonContainer'>
+                        $button
+                    </div>";
         }
     }
 

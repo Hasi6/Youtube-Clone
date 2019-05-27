@@ -42,6 +42,12 @@
             $uploadedBy = $this->video->getUploadedBy();
             $profileButton = ButtonProvider::createProfileButton($this->con, $uploadedBy);
 
+            if($uploadedBy === $this->userLoggedInObj->getUsername()){
+                $actionButton = ButtonProvider::createEditVideoButton($this->video->getId());
+            }else{
+                $actionButton = "";
+            }
+
             return  "<div class='secondaryInfo'>
                         <div class='topRow'>
                             $profileButton
@@ -52,6 +58,7 @@
                                 </span>
                                 <span class='date'>Uploaded On: $uploadDate</span>
                             </div>
+                            $actionButton
                         </div>
                     </div>";
         }
