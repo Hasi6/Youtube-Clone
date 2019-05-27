@@ -67,6 +67,12 @@
     margin: 4px 8px 8px 8px;
 }
 
+.secondaryInfo {
+    border-bottom: 1px solid #dedede;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
 .topRow {
     display: flex;
     margin-bottom: 12px;
@@ -94,4 +100,40 @@
     color: rgba(17, 17, 17, 0.5);
     font-size: 12px;
     font-weight: 400;
+}
+
+.descriptionContainer {
+    margin-left: 64px;
+    max-width: 615px;
+}
+
+.topRow .button,
+.edit {
+    padding: 6px 15px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 2px;
+    border: none;
+    font-size: 10px;
+}
+
+.subscribeButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.subscribeButtonContainer .subscribe {
+    background: #f00;
+    color: #fff;
+}
+
+.subscribeButtonContainer .unsubscribe {
+    background: #eee;
+    color: rgba(17, 17, 17, 0.6);
+}
+
+.edit {
+    background: #2692e6;
+    color: #fff;
 }
