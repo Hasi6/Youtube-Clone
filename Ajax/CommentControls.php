@@ -37,7 +37,12 @@
         
         private function createLikesCount(){
             $text = $this->comment->getLikes();
-            return "";
+
+            if($text == 0){
+                $text = "";
+            }
+
+            return "<span class='likesCount'>$text</span>";
         }
 
         private function createReplySection(){
