@@ -23,6 +23,24 @@
             $profileButton = ButtonProvider::createProfileButton($this->con, $postedBy);
             $commentAction = "postComment(this, \"$postedBy\", $videoId, null, \"comments\")";
             $commentButton = ButtonProvider::createButton("COMMENT",null, $commentAction, "postComment");
+
+            //Comment HTML
+
+
+            return "<div class='commentSection'>
+                        <div class='header'>
+                            <span class='commentCount'>$comments Comments</span>
+
+                            <div class='commentForm'>
+                                $profileButton
+                                <textarea class='commentBody' placeholder='Add Comment'></textarea>
+                                $commentButton
+                            </div>
+                        </div>
+                        <div class='comments'>
+                        
+                        </div>
+                    </div>";
         }
 
     }
