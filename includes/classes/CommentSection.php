@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class='comments'>
-                        
+                            
                         </div>
                     </div>";
         }
