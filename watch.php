@@ -2,6 +2,7 @@
     require_once('./includes/header.php');
     require_once('./includes/classes/VideoPlayer.php');
     require_once('./includes/classes/VideoInfoSection.php');
+    require_once('./includes/classes/CommentSection.php');
 ?>
 
 <!-- Link watch css -->
@@ -33,6 +34,9 @@
 
         $videoInfoSection = new VideoInfoSection($con, $video, $userLoggedInObj);
         echo $videoInfoSection->create();
+
+        $commentSection = new CommentSection($con, $video, $userLoggedInObj);
+        echo $commentSection->create();
     ?>
 
 </div>
