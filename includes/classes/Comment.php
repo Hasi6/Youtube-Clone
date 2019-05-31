@@ -210,11 +210,15 @@ class Comment {
 
             $query->execute();
 
-            return 1;
+            $results = array(
+                "likes" => 0,
+                "dislikes" => -1
+            );
+            return json_encode($results);
 
         }
         else{
-            //When user press like if user already dislike the video dislike will delete
+            //When user press like if user already dislike the Commment dislike will delete
             $query = $this->con->prepare("DELETE FROM likes WHERE username = :username AND commetId = :commetId");
 
             $query->bindParam(":username", $username);
@@ -232,7 +236,11 @@ class Comment {
             $query->execute();
 
             
-            return -1 - $count;
+            $results = array(
+                "likes" => 0 - $count,
+                "dislikes" => 1
+            );
+            return json_encode($results);
         }
     }
 
