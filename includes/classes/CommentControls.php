@@ -61,7 +61,7 @@
             $postButton = ButtonProvider::createButton("Reply",null, $postButtonAction, "postComment");
 
 
-            return "<div class='commentForm hid'>
+            return "<div class='commentForm hidden'>
                         $profileButton
                         <textarea class='commentBody' placeholder='Add Comment'></textarea>
                         $cancelButton
@@ -69,6 +69,7 @@
                     </div>";
         }
         
+
         private function createLikeButton(){
             $commentId = $this->comment->getId();
             $videoId = $this->comment->getVideoId();
