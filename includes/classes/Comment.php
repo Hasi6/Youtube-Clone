@@ -1,5 +1,6 @@
 <?php
 require_once("ButtonProvider.php");
+require_once("CommentControls.php");
 ?>
 
 <?php
@@ -35,6 +36,9 @@ class Comment{
         $profileButton = ButtonProvider::createProfileButton($this->con, $postedBy);
         $timespan = ""; 
 
+        $commentControlsObj = new CommentControl($this->con, $this, $this->userLoggedInObj);
+        $commentControls = $commentControlsObj->create();
+
         return "<div class='item-container'>
                     <div class='comment'>
                         $profileButton
@@ -54,9 +58,74 @@ class Comment{
 
                         </div>
                     </div>
+                    $commentControls
                 </div>";
     }
 
+        // Get Comment ID
+        public function getId(){
+            return $this->sqlData["id"];
+        }
+
+        // Get Video ID
+        public function getVideoId(){
+            return $this->videoId;
+        }
+
+        // Comment Liked By
+        public function wasLikedBy(){
+            $id = $this->getId();
+
+            $query = $this->con->prepare("SELECT * FROM likes WHERE username = :username AND commentId = :commentId");
+            $query->bindParam(":username",$username);
+            $query->bindParam(":commentId",$id);
+
+            $username = $this->userLoggedInObj->getUsername();
+            $query->execute();
+
+           return $query->rowCount() > 0 ;
+        }
+
+        // Comment DisLiked By
+        public function wasDisLikedBy(){
+            $id = $this->getId();
+
+            $query = $this->con->prepare("SELECT * FROM dislikes WHERE username = :username AND commentId = :commentId");
+            $query->bindParam(":username",$username);
+            $query->bindParam(":commentId",$id);
+
+            $username = $this->userLoggedInObj->getUsername();
+            $query->execute();
+
+           return $query->rowCount() > 0 ;
+        }
+
+
+        public function getLikes(){
+
+            // Get Number of likes for the comment
+            $query = $this->con->prepare("SELECT count(*) as 'count' FROM likes WHERE commentId=:commentId");
+
+            $query->bindParam(":commentId", $commentId);
+
+            $commentId = $this->getId();
+            $query->execute();
+
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+            $numLikes = $data["count"];
+
+            // Get Number of dislikes of ther commet
+            $query = $this->con->prepare("SELECT count(*) as 'count' FROM dislikes WHERE commentId=:commentId");
+
+            $query->bindParam(":commentId", $commentId);
+
+            $query->execute();
+
+            $data = $query->fetch(PDO::FETCH_ASSOC);
+            $numDisLikes = $data["count"];
+
+            return $numLikes - $numDisLikes;
+        }
 
 }
 
