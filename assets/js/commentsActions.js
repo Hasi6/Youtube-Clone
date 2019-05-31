@@ -8,7 +8,11 @@ function postComment(button, postedBy, videoId, replyTo, containerClass) {
         $.post("ajax/postComment.php", { commentText: commentText, postedBy: postedBy, videoId: videoId, responseTo: replyTo })
             .done((comment) => {
 
-                $("." + containerClass).prepend(comment);
+                if (!replyTo) {
+                    $("." + containerClass).prepend(comment);
+                } else {
+                    $(button).parent().siblings("." + containerClass).append(comment);
+                }
 
             });
 
