@@ -49,7 +49,13 @@ class VideoGrid{
 
     // if video is selected display same kind of videos
     public function generateItemsFromVideos($videos){
-        
+        $elemenstHtml = "";
+
+        foreach($videos as $video){
+            $item = new VideoGridItem($video, $this->largeMode);
+            $elemenstHtml .= $item->create();
+        }
+        return $elemenstHtml;
     }
 
     // Create video header 

@@ -507,6 +507,8 @@ a:hover {
 .videoGridItem {
     margin-right: 4px;
     margin-bottom: 24px;
+    height: 200px;
+    ;
 }
 
 .videoGridItem .thumbnail {
