@@ -44,7 +44,11 @@
 </div>
 
 <div class="suggestions">
+    <?php 
+        $videoGrid = new VideoGrid($con, $userLoggedInObj);
 
+        echo $videoGrid->create(null, null, false);
+    ?>
 </div>
 
 <?php
