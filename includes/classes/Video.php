@@ -271,6 +271,15 @@
     
         }
 
+        public function getThumbnail(){
+            $query = $this->con->prepare("SELECT filePath FROM thumbnails WHERE videoid=:videoId AND selected=1");
+            $query->bindParam(":videoId", $videoId);
+            $videoId = $this->getId();
+            $query->execute();
+
+            return $query->fetchColumn();
+        }
+
     }
 
 ?>
