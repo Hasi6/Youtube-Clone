@@ -17,8 +17,22 @@
     const divs = document.querySelector('.alert');
     setTimeout(function(){
         divs.style.display = 'none';
-    },10000);
+    },5000);
 </script>
+
+<!-- disply Videos -->
+
+<div class="videoSection">
+
+    <?php 
+        $videoGrid = new VideoGrid($con, $userLoggedInObj->getUsername());
+        echo $videoGrid->create(null, "Videos for You", false)
+    ?>
+
+</div>
+
+
+
 
 <?php
     require_once('./includes/footer.php');
