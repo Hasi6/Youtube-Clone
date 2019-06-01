@@ -1,7 +1,9 @@
 <?php
     require('includes/config.php');
+    require('includes/classes/ButtonProvider.php');
     require('includes/classes/User.php');
     require_once('includes/classes/Video.php');
+    require_once('includes/classes/VideoGrid.php');
 ?>
 
 <?php
