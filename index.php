@@ -25,8 +25,17 @@
 <div class="videoSection">
 
     <?php 
+
+        $subscriptionprovider = new Subscriptionprovider($con, $userLoggedInObj);
+        $subscriptionVideos = $subscriptionprovider->getVideos();
+
         $videoGrid = new VideoGrid($con, $userLoggedInObj->getUsername());
-        echo $videoGrid->create(null, "Videos for You", false)
+
+        if(User::isLoggedIn() && sizeof($subscriptionVideos) > 0){
+            echo $videoGrid->create(null, "Subscription", false);
+        }
+
+        echo $videoGrid->create(null, "Videos for You", false);
     ?>
 
 </div>
