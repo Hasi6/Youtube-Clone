@@ -37,6 +37,7 @@
         public function getUploadedBy(){
             return $this->sqlDate["uploadedBy"];
         }
+        
 
         //Get Video Title to Display
         public function getTitle(){
@@ -65,8 +66,13 @@
         //Get Video Upload date
         public function getUploadDate(){
             $date = $this->sqlDate["uploadDate"];
-            return date("M d, Y G:i:s", strtotime($date));
+            return date("M jS, Y", strtotime($date));
+        }
 
+        //Get Video Upload Timestamp
+        public function getTimestamp(){
+            $date = $this->sqlDate["uploadDate"];
+            return date("M d, Y G:i:s", strtotime($date));
         }
 
         //Get Video Views
