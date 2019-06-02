@@ -34,7 +34,7 @@ $videoGrid = new VideoGrid($con, $userLoggedInObj);
     <?php
     
         if(sizeof($videos) > 0) {
-            echo $videoGrid->createLarge($videos, sizeof($videos) . " are Found", true);
+            echo $videoGrid->createLarge($videos, sizeof($videos) . " Videos are Found", true);
         }
         else{
             echo "No results Found";
