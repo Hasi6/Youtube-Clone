@@ -21,7 +21,28 @@ else{
     $orderBy = 'uploadDate';
 }
 
+$searchResultsProvider = new SearchresultsProvider($con, $userLoggedInObj);
+
+$videos = $searchResultsProvider->getVideos($term, $orderBy);
+
+$videoGrid = new VideoGrid($con, $userLoggedInObj);
+
 ?>
+
+<div class="largeVideoGridContainer">
+
+    <?php
+    
+        if(sizeof($videos) > 0) {
+            echo $videoGrid->createLarge($videos, sizeof($videos) . " are Found", true);
+        }
+        else{
+            echo "No results Found";
+        }
+    
+    ?>
+
+</div>
 
 
 
