@@ -1,0 +1,26 @@
+<?php 
+require_once("includes/header.php");
+require_once("includes/classes/TrendingProvider.php");
+?>
+
+<?php 
+
+    $trendingProvider = new TrendingProvider($con, $userLoggedInObj);
+    $videos = $trendingProvider->getVideos();
+
+    $videoGrid = new VideoGrid($con, $userLoggedInObj);
+
+?>
+
+<div class="largeVideoGridContainer">
+    <?php
+    
+        if(sizeof($videos) > 0){
+            echo $videoGrid->createLarge($videos, "Trending Videos", false);
+        }
+        else{
+            echo "No Trending Videos to Show";
+        }
+    
+    ?>
+</div>

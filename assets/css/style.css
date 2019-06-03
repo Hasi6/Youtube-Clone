@@ -604,7 +604,8 @@ a:hover {
 }
 
 .videoGrid.large .videoGridItem .details {
-    max-width: 300px;
+    max-width: 600px;
+    flex: 1;
 }
 
 .videoGrid.large .videoGridItem .details .title {
