@@ -1,5 +1,6 @@
 <?php 
 require_once("includes/header.php");
+require_once("includes/classes/LikedVideosProvider.php");
 ?>
 
 <?php 
@@ -9,8 +10,8 @@ require_once("includes/header.php");
     }
 
 
-    $subscriptionProvider = new SubscriptionProvider($con, $userLoggedInObj);
-    $videos = $subscriptionProvider->getVideos();
+    $likedVideosProvider = new LikedVideosProvider($con, $userLoggedInObj);
+    $videos = $likedVideosProvider->getVideos();
 
     $videoGrid = new VideoGrid($con, $userLoggedInObj);
 
@@ -20,7 +21,7 @@ require_once("includes/header.php");
     <?php
     
         if(sizeof($videos) > 0){
-            echo $videoGrid->createLarge($videos, "New Videos From Your Subscriptions", false);
+            echo $videoGrid->createLarge($videos, "Videos That You Have Liked", false);
         }
         else{
             echo "No New Vidoes to Show";
