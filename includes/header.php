@@ -6,8 +6,9 @@
     require_once('includes/classes/VideoGrid.php');
     require_once('includes/classes/VideoGridItem.php');
     require_once('includes/classes/Subscriptionprovider.php');
+    require_once('includes/classes/NavigationMenuProvider.php');
 
-    session_destroy();
+    // session_destroy();
 
 ?>
 
@@ -79,7 +80,10 @@
         </div>
 
         <div id="sideNavContainer" style="display: none">
-            
+            <?php 
+                $navigationProvider = new NavigationMenuProvider($con, $userLoggedInObj);
+                echo $navigationProvider->create();
+            ?>
         </div>
 
         <div id="mainSectionContainer">
