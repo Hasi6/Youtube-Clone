@@ -6,6 +6,9 @@
     require_once('includes/classes/VideoGrid.php');
     require_once('includes/classes/VideoGridItem.php');
     require_once('includes/classes/Subscriptionprovider.php');
+
+    session_destroy();
+
 ?>
 
 <?php
@@ -70,9 +73,7 @@
                 <a href="upload.php">
                     <img src="./assets/images/icons/upload.png" alt="uoload image" class="upload">
                 </a>
-                <a href="#">
-                    <img src="./assets/images/icons/profile.png" alt="profile pic">
-                </a>
+                <?php echo ButtonProvider::createUserProfileNavigationButton($con, $userLoggedInObj->getUsername());?>
             </div>
 
         </div>

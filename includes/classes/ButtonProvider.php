@@ -94,6 +94,17 @@
                         $button
                     </diV>";
         }
+
+        public static function createUserProfileNavigationButton($con, $username){
+            if(User::isLoggedIn()){
+                return ButtonProvider::createProfileButton($con, $username);
+            }
+            else{
+                return "<a href='login.php'>
+                    <span class='signInLink'>Log In</span>
+                </a>";
+            }
+        }
     }
 
 ?>
