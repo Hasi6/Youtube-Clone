@@ -31,5 +31,13 @@
         public function getProfileUserFullName(){
             return $this->profileUserObj->getUsername();
         }
+
+        public function getProfilePic(){
+            return $this->profileUserObj->getProfilePic();
+        }
+
+        public function getsubCount(){
+            return $this->profileUserObj->getSubscriberCount();
+        }
     }
 ?>

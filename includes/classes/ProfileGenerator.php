@@ -44,7 +44,23 @@ require_once("ProfileData.php");
         }
 
         public function createHeaderSection(){
+            $profileImage = $this->profileData->getProfilePic();
+            $name = $this->profileData->getProfileUserFullName();
+            $subCount = $this->profileData->getsubCount();
 
+            return "<div class='profileHeader'>
+                        <div class='userInfoContainer'>
+                            <img class='profileImage' src='$profileImage'>
+                            <div class='userInfo'>
+                                <span class='title'>$name</span>
+                                <span class='subscriberCount'>$subCount Subscribers</span>
+                            </div>
+                        </div>
+
+                        <div class='buttonContainer'>
+                            
+                        </div>
+                    </div>";
         }
 
         public function createTabSection(){
