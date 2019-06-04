@@ -79,9 +79,20 @@ require_once("ProfileData.php");
         }
 
         public function createContentSection(){
+
+            $videos = $this->profileData->getUsersVideos();
+
+            if(sizeof($videos) >0 ){
+                $videosGrid = new VideoGrid($this->con, $this->userLoggedInObj);
+                $videoGridHtml = $videosGrid->create($videos, null, false);
+            }
+            else{
+                $videoGridHtml = "<span>This User Has No Videos</span>";
+            }
+
             return "<div class='tab-content channelContent'>
                         <div class='tab-pane fade show active' id='videos' role='tabpanel' aria-labelledby='videos-tab'>
-                            Videos Tab
+                            $videoGridHtml
                         </div>
                         <div class='tab-pane fade' id='about' role='tabpanel' aria-labelledby='about-tab'>
                             About Tab
