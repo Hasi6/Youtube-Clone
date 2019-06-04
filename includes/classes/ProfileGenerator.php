@@ -35,7 +35,12 @@ require_once("ProfileData.php");
 
         public function createCoverPhotoSection(){
             $coverPhotoSrc = $this->profileData->getCoverPhoto();
-            echo $coverPhotoSrc;
+            $name = $this->profileData->getProfileUserFullName();
+
+            return "<div class='coverPhotoContainer'>
+                        <img src='$coverPhotoSrc' class='coverphoto'>
+                        <span class='channelname'>$name</span>
+                    </div>";
         }
 
         public function createHeaderSection(){

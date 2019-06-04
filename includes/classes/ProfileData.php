@@ -27,5 +27,9 @@
         public function getCoverPhoto(){
             return "assets/images/Cover Photo/cover.jpg";
         }
+
+        public function getProfileUserFullName(){
+            return $this->profileUserObj->getUsername();
+        }
     }
 ?>
