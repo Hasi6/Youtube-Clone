@@ -23,5 +23,9 @@
 
             return $query->rowCount() != 0;
         }
+
+        public function getCoverPhoto(){
+            return "assets/images/Cover Photo/cover.jpg";
+        }
     }
 ?>
