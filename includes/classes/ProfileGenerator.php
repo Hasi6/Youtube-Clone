@@ -11,9 +11,14 @@ require_once("ProfileData.php");
             $this->userLoggedInObj = $userLoggedInObj;
             $this->profileData = new ProfileData($con, $profileUsername);
         }
+
         public function create(){
             $profileUsername = $this->profileData->getProfileUsername();
-            echo $profileUsername;
+            
+            if(!$this->profileData->userExists()){
+                return "No Users Found...";
+            }
         }
+        
     }
 ?>

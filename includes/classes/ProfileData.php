@@ -11,5 +11,17 @@
         public function getProfileUsername(){
             return $this->profileUserObj->getUsername();
         }
+
+        // check username is in our database or not
+        public function userExists(){
+            $query = $this->con->prepare("SELECT * FROM users WHERE username =:username");
+
+            $query->bindParam(":username", $profileUsername);
+
+            $profileUsername = $this->getProfileUsername();
+            $query->execute();
+
+            return $query->rowCount() != 0;
+        }
     }
 ?>
