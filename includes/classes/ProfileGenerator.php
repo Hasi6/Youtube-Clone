@@ -82,6 +82,8 @@ require_once("ProfileData.php");
 
             $videos = $this->profileData->getUsersVideos();
 
+            $aboutSection = $this->createAboutSection();
+
             if(sizeof($videos) >0 ){
                 $videosGrid = new VideoGrid($this->con, $this->userLoggedInObj);
                 $videoGridHtml = $videosGrid->create($videos, null, false);
@@ -95,7 +97,7 @@ require_once("ProfileData.php");
                             $videoGridHtml
                         </div>
                         <div class='tab-pane fade' id='about' role='tabpanel' aria-labelledby='about-tab'>
-                            About Tab
+                            $aboutSection
                         </div>
                     </div>";
         }
@@ -107,6 +109,24 @@ require_once("ProfileData.php");
             else{
                 return ButtonProvider::createSubscribeButton($this->con, $this->profileData->getprofileUserObj(), $this->userLoggedInObj);
             }
+        }
+
+        private function createAboutSection(){
+            $html = "<div class='section'>
+                        <div class='title'>
+                            <span>Details</span>
+                        </div>
+                    <div class='values'>";
+
+                    $details = $this->profileData->getAllUserDetails();
+
+                    foreach($details as $key => $value){
+                        $html .= "<span>$key: $value</span>";
+                    }
+
+                    $html .= "</div></div>";
+
+            return $html;
         }
         
     }
