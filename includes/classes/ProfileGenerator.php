@@ -48,6 +48,8 @@ require_once("ProfileData.php");
             $name = $this->profileData->getProfileUserFullName();
             $subCount = $this->profileData->getsubCount();
 
+            $button = $this->createHeaderButton();
+
             return "<div class='profileHeader'>
                         <div class='userInfoContainer'>
                             <img class='profileImage' src='$profileImage'>
@@ -58,7 +60,9 @@ require_once("ProfileData.php");
                         </div>
 
                         <div class='buttonContainer'>
-                            
+                            <div class='buttonItem'>
+                                $button
+                            </div>
                         </div>
                     </div>";
         }
@@ -69,6 +73,15 @@ require_once("ProfileData.php");
 
         public function createContentSection(){
 
+        }
+
+        private function createHeaderButton(){
+            if($this->userLoggedInObj->getUsername() == $this->profileData->getProfileUsername()){
+                return "";
+            }
+            else{
+                return ButtonProvider::createSubscribeButton($this->con, $this->profileData->getprofileUserObj(), $this->userLoggedInObj);
+            }
         }
         
     }

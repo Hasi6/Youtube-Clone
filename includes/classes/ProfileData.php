@@ -8,6 +8,10 @@
             $this->profileUserObj = new User($con, $profileUserObj);
         }
 
+        public function getprofileUserObj(){
+            return $this->profileUserObj;
+        }
+
         public function getProfileUsername(){
             return $this->profileUserObj->getUsername();
         }
