@@ -11,7 +11,7 @@
         echo "User Not Found";
         exit();
     }
-    $profileGenerator = new ProfileGenerator($con, $userLoggedInObj, $pprofileUsername);
+    $profileGenerator = new ProfileGenerator($con, $userLoggedInObj, $profileUsername);
     echo $profileGenerator->create();
 ?>
 
