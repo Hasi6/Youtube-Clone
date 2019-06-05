@@ -22,8 +22,8 @@ class SettingsFormProvider {
     public function createPasswordForm() {
 
         $oldPasswordInput = $this->createPasswordInput("oldPassword", "Old Password");
-        $newPassword1Input = $this->createLastNameInput("newPassword", "News Password");
-        $newPassword2Input = $this->createEmailInput("newPassword2", "Confirm New Password");
+        $newPassword1Input = $this->createPasswordInput("newPassword", "New Password");
+        $newPassword2Input = $this->createPasswordInput("newPassword2", "Confirm New Password");
         $saveButton = $this->createSavePasswordButton();
 
         return "<form action='#' method='POST'>

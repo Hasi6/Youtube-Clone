@@ -63,6 +63,43 @@
         }
     }
 
+    // Update user Password
+    public function updatePassword($opw, $pw, $pw2, $un){
+        $this->validateOldPassword($opw, $un);
+        $this->validatePassword($pw, $pw2);
+
+        if(empty($this->errorArray)){
+            //Update Password
+            $query = $this->con->prepare("UPDATE users SET password=:pw WHERE username=:un");
+
+            $pw = hash("sha512", $pw);
+
+            $query->bindParam(":pw", $pw);
+            $query->bindParam(":un", $un);
+
+            return $query->execute();
+        }
+        else{
+            return false;
+        }
+    }
+
+    // check if the user enter old password match or not
+    private function validateOldPassword($opw, $un){
+        $ps = hash("sha512", $opw);
+
+        $query = $this->con->prepare("SELECT * FROM users WHERE username=:un AND password=:ps");
+        $query->bindParam(":un", $un);
+        $query->bindParam(":ps", $ps);
+
+        $query->execute();
+
+        if($query->rowCount() == 0 ){
+            array_push($this->errorArray, Constance::$passwordInvalid);
+        }
+        
+    }
+
     // Insert User details to the database and password Hashing
     public function insertUserDetails($fn, $ln,$un,$em,$ps){
 

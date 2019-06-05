@@ -15,6 +15,7 @@
     $passwordMessage = "";
     $formProvider = new SettingsFormProvider();
 
+    // update user details
     if(isset($_POST["saveDetailsButton"])){
         $account = new Accounts($con);
 
@@ -41,8 +42,30 @@
 
     }
 
-    if(isset($_POST["saveDetailsButton"])){
-        
+    // update user password
+    if(isset($_POST["savePasswordButton"])){
+        $account = new Accounts($con);
+
+        $oldPassword = FormSanitizer::sanitizeFromPassword($_POST["oldPassword"]);
+        $newPassword = FormSanitizer::sanitizeFromPassword($_POST["newPassword"]);
+        $newPassword2 = FormSanitizer::sanitizeFromPassword($_POST["newPassword2"]);
+
+        if($account->updatePassword($oldPassword, $newPassword, $newPassword2, $userLoggedInObj->getUsername())){
+            // Success
+            $passwordMessage = "<div class='alert alert-success'>
+                                    Password Updated Successfully...
+                                </div>";
+        }
+        else{
+            // Error
+            $errorMessage = $account->getFirstError();
+
+            if($errorMessage == "") $errorMessage = "Something Went Wrong";
+
+            $passwordMessage = "<div class='alert alert-danger'>
+                                    $errorMessage 
+                                </div>";
+        }
     }
 ?>
 
@@ -63,6 +86,10 @@
     </div>
 
     <div class="formSection">
+            <div class="message">
+                <?php echo $passwordMessage; ?>
+            </div>
+
         <?php 
             echo $formProvider->createPasswordForm(); 
         ?>

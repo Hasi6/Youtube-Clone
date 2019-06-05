@@ -14,5 +14,8 @@
 
         public static $login = "Your username or password is Invalid";
 
+        public static $passwordInvalid = "Invalid Password..";
+
+
     }
 ?>
