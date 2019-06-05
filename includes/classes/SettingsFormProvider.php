@@ -1,7 +1,7 @@
 <?php
 class SettingsFormProvider {
 
-
+    // Change User Details
     public function createUserDetailsForm() {
 
         $firstNameInput = $this->createFirstNameInput(null);
@@ -10,12 +10,31 @@ class SettingsFormProvider {
         $saveButton = $this->createSaveUserDetailsButton();
 
         return "<form action='processing.php' method='POST' enctype='multipart/form-data'>
+                    <span class='title'>User Details</span>
                     $firstNameInput
                     $lastNameInput
                     $emailInput
                     $saveButton
                 </form>";
     }
+
+    // Change password
+    public function createPasswordForm() {
+
+        $oldPasswordInput = $this->createPasswordInput("oldPassword", "Old Password");
+        $newPassword1Input = $this->createLastNameInput("newPassword", "News Password");
+        $newPassword2Input = $this->createEmailInput("newPassword2", "Confirm New Password");
+        $saveButton = $this->createSavePasswordButton();
+
+        return "<form action='processing.php' method='POST' enctype='multipart/form-data'>
+                    <span class='title'>Change Password</span>
+                    $oldPasswordInput
+                    $newPassword1Input
+                    $newPassword2Input
+                    $saveButton
+                </form>";
+    }
+
 
     private function createFirstNameInput($value) {
         if($value == null) $value = "";
@@ -40,6 +59,16 @@ class SettingsFormProvider {
 
     private function createSaveUserDetailsButton() {
         return "<button type='submit' class='btn btn-primary' name='saveDetailsButton'>Update</button>";
+    }
+
+    private function createPasswordInput($name, $placeholder) {
+        return "<div class='form-group'>
+                    <input type='password' class='form-control' placeholder='$placeholder' name='$name' required>
+                </div>";
+    }
+
+    private function createSavePasswordButton() {
+        return "<button type='submit' class='btn btn-primary' name='saveDetailsButton'>Update Password</button>";
     }
 }
 ?>
