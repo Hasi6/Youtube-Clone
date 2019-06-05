@@ -9,7 +9,7 @@ class SettingsFormProvider {
         $emailInput = $this->createEmailInput($email);
         $saveButton = $this->createSaveUserDetailsButton();
 
-        return "<form action='processing.php' method='POST' enctype='multipart/form-data'>
+        return "<form action='#' method='POST'>
                     <span class='title'>User Details</span>
                     $firstNameInput
                     $lastNameInput
@@ -26,7 +26,7 @@ class SettingsFormProvider {
         $newPassword2Input = $this->createEmailInput("newPassword2", "Confirm New Password");
         $saveButton = $this->createSavePasswordButton();
 
-        return "<form action='processing.php' method='POST' enctype='multipart/form-data'>
+        return "<form action='#' method='POST'>
                     <span class='title'>Change Password</span>
                     $oldPasswordInput
                     $newPassword1Input
@@ -68,7 +68,7 @@ class SettingsFormProvider {
     }
 
     private function createSavePasswordButton() {
-        return "<button type='submit' class='btn btn-primary' name='saveDetailsButton'>Update Password</button>";
+        return "<button type='submit' class='btn btn-primary' name='savePasswordButton'>Update Password</button>";
     }
 }
 ?>

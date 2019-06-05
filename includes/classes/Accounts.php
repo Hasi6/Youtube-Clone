@@ -41,6 +41,28 @@
         }
     }
 
+    // Update user details
+    public function updateDetails($fn, $ln, $em, $un){
+        $this->validateFirstName($fn);
+        $this->validateLastName($ln);
+        $this->validateNewEmail($em, $un);
+
+        if(empty($this->errorArray)){
+            //Update Details
+
+            $query = $this->con->prepare("UPDATE users SET firstname=:fn, lastname=:ln, email=:em WHERE username=:un");
+            $query->bindParam(":fn", $fn);
+            $query->bindParam(":ln", $ln);
+            $query->bindParam(":em", $em);
+            $query->bindParam(":un", $un);
+
+            return $query->execute();
+        }
+        else{
+            return false;
+        }
+    }
+
     // Insert User details to the database and password Hashing
     public function insertUserDetails($fn, $ln,$un,$em,$ps){
 
@@ -116,6 +138,24 @@
         }
     }
 
+    private function validateNewEmail($em,$un){
+
+
+        if(!filter_var($em, FILTER_VALIDATE_EMAIL)){
+            array_push($this->errorArray,Constance::$emailValid);
+            return;
+        }
+        // Check if username is already exists
+        $query = $this->con->prepare("SELECT username FROM users WHERE email=:em AND username != :un");
+        $query->bindParam(":em", $em);
+        $query->bindParam(":un", $un);
+        $query->execute();
+
+        if($query->rowCount() != 0){
+            array_push($this->errorArray,Constance::$emailAlreadyHave);
+        }
+    }
+
     private function validatePassword($ps,$ps2){
 
         // check the length of the string and if there is a any issue the issue push to the errorArray and the messages is in Constans class
@@ -138,6 +178,15 @@
     public function getError($error){
         if(in_array($error, $this->errorArray)){
             return "<span class='errorMessage'>$error</span>";
+        }
+    }
+
+    public function getFirstError(){
+        if(!empty($this->errorArray)){
+            return $this->errorArray[0];
+        }
+        else{
+            return "";
         }
     }
 
