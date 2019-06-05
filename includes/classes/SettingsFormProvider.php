@@ -2,11 +2,11 @@
 class SettingsFormProvider {
 
     // Change User Details
-    public function createUserDetailsForm() {
+    public function createUserDetailsForm($firstName, $lastName, $email) {
 
-        $firstNameInput = $this->createFirstNameInput(null);
-        $lastNameInput = $this->createLastNameInput(null);
-        $emailInput = $this->createEmailInput(null);
+        $firstNameInput = $this->createFirstNameInput($firstName);
+        $lastNameInput = $this->createLastNameInput($lastName);
+        $emailInput = $this->createEmailInput($email);
         $saveButton = $this->createSaveUserDetailsButton();
 
         return "<form action='processing.php' method='POST' enctype='multipart/form-data'>

@@ -19,7 +19,11 @@
 
     <div class="formSection">
         <?php 
-            echo $formProvider->createUserDetailsForm(); 
+            echo $formProvider->createUserDetailsForm(
+                isset($_POST["firstName"]) ? $_POST["firstName"] : $userLoggedInObj->getFirstName(),
+                isset($_POST["lastName"]) ? $_POST["lastName"] : $userLoggedInObj->getLastName(),
+                isset($_POST["email"]) ? $_POST["email"] : $userLoggedInObj->getEmail()
+            ); 
         ?>
     </div>
 
