@@ -45,7 +45,7 @@
 
 </div>
 
-
+<script src="assets/js/editVideoAction.js"></script>
 <?php
     require_once("./includes/footer.php");
 ?>
