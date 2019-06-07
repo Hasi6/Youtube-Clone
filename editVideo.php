@@ -23,6 +23,31 @@
         echo "No can't edit this video, Because this is uploaded by ".$video->getUploadedBy(). " not you";
         exit();
     }
+
+    // check if form is submited
+    if(isset($_POST["saveButton"])){
+        $videoData = new VideoUploadData(
+            null,
+            $_POST["titleInput"],
+            $_POST["descriptionInput"],
+            $_POST["privacyInput"],
+            $_POST["categoryInput"],
+            $userLoggedInObj->getUsername()
+        );
+
+        if($account->updateDetails($firstName, $lastName, $email, $userLoggedInObj->getUsername())){
+            // Success
+            $detailsMessage = "<div class='alert alert-success'>
+                                    Details Updated Successfully...
+                                </div>";
+        }
+        else{
+            // Error
+            $detailsMessage = "<div class='alert alert-danger'>
+                                    Something Went Wrong
+                                </div>";
+        }
+    }
 ?>
 
 <div class="editVideoContainer column">
