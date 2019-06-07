@@ -24,6 +24,7 @@
         exit();
     }
 
+    $detailsMessage ="";
     // check if form is submited
     if(isset($_POST["saveButton"])){
         $videoData = new VideoUploadData(
@@ -35,11 +36,13 @@
             $userLoggedInObj->getUsername()
         );
 
-        if($account->updateDetails($firstName, $lastName, $email, $userLoggedInObj->getUsername())){
+        if($videoData->updateDetails($con, $video->getId())){
             // Success
             $detailsMessage = "<div class='alert alert-success'>
                                     Details Updated Successfully...
                                 </div>";
+            $video = new Video($con, $_GET["videoId"], $userLoggedInObj);
+
         }
         else{
             // Error
@@ -51,7 +54,9 @@
 ?>
 
 <div class="editVideoContainer column">
-
+    <div class="message">
+        <?php echo $detailsMessage ?>
+    </div>
     <div class="topSection">
 
         <?php
